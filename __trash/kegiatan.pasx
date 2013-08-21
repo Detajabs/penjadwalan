@@ -1,0 +1,89 @@
+unit kegiatan;
+
+interface
+
+uses
+  DML, PARENT, Windows, Messages, SysUtils, Variants, Classes, Graphics,
+  Controls, Forms, Dialogs, DB, Grids, DBGrids, ExtCtrls, DBCtrls, StdCtrls, Mask, Buttons, 
+  ZAbstractRODataset, ZAbstractDataset, ZDataset, sDBMemo, sDBEdit, sLabel,
+  sGroupBox, acDBGrid, sPanel;
+
+type
+  TFrmKegiatan = class(TFormDee)
+    Panel1: TsPanel;
+    DBEdit3: TsDBEdit;
+    Label1: TsLabel;
+    Label4: TsLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
+    DSJurusan: TDataSource;
+    DBLookupComboBox2: TDBLookupComboBox;
+    DSMatapelajaran: TDataSource;
+    DSPengajar: TDataSource;
+    DBLookupComboBox3: TDBLookupComboBox;
+    DBGrid1: TDBGrid;
+    DSQuery: TDataSource;
+    ZQuery: TZQuery;
+    ZQuerykid: TIntegerField;
+    ZQuerytingkat: TWideStringField;
+    ZQueryjurusan: TWideStringField;
+    ZQuerykelas: TWideStringField;
+    ZQuerymatapelajaran: TWideStringField;
+    ZQueryjam: TIntegerField;
+    ZQuerypengajar: TWideStringField;
+    DSKelas: TDataSource;
+    DBLookupComboBox5: TDBLookupComboBox;
+    DBLookupComboBox6: TDBLookupComboBox;
+    DSTingkat: TDataSource;
+    ZQuerytingkatid: TIntegerField;
+    ZQueryjid: TIntegerField;
+    ZQuerykode_jurusan: TWideStringField;
+    ZQuerykelasid: TIntegerField;
+    ZQuerympid: TIntegerField;
+    ZQuerykode_matapelajaran: TWideStringField;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure DSQueryDataChange(Sender: TObject; Field: TField);
+    procedure ToggleState(Status: Boolean = True);private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmKegiatan: TFrmKegiatan;
+
+implementation
+
+uses datamodul, SESSION;
+{$R *.dfm}
+
+procedure TFrmKegiatan.ToggleState(Status: Boolean = True);
+begin
+  DBGrid1.Enabled := Status;
+end;
+
+procedure TFrmKegiatan.DSQueryDataChange(Sender: TObject; Field: TField);
+begin
+  FrmDML.DBGrid.DataSource.DataSet.Locate('kid',ZQuery.FieldByName('kid').AsInteger,[]);
+end;
+
+procedure TFrmKegiatan.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  FrmKegiatan := nil;
+end;
+
+procedure TFrmKegiatan.FormCreate(Sender: TObject);
+var i:integer;
+begin
+  inherited;
+  //self.FiterField := 'matapelajaran';
+  DBGrid1.OnDrawColumnCell := DBGridDrawColumnCell;
+  ZQuery.Active := True;
+
+  if DEBUG_MODE then DBGrid1.Visible := False;
+
+end;
+
+end.
+
