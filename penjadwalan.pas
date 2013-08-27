@@ -426,7 +426,7 @@ begin
   // DBGrid1.Visible := DEBUG_MODE;
   StartRegenerasi.Enabled := false;
   CreateReport.Enabled := false;
-  SetupConfig.Enabled := False;
+  //SetupConfig.Enabled := False;
   SpeedButton4.Visible := false;
 
   with FrmDataModul do

@@ -1115,6 +1115,61 @@ var
   end;
   }
 
+  procedure AturanPosisi2();
+  var
+    // Key for CurrSolusi : Jurusan - KodeHari - KodeJam
+    CurrSolusi: array of array of array of array of TDetailGen;
+    // Key for Summary : Jurusan
+    Summary: array of TSummary;
+    JumKegiatan: array of integer;
+    HasJadwal, hasAwal: boolean;
+    i, j, k: integer;
+  begin
+    // Sortir current solusi untuk memudahkan pencarian Fitness;
+    // Apabila disimpan di SQL proses menjadi lambat;
+    with FrmPenjadwalan do
+    begin
+      if TblKelasDiajar.Active = false then
+        TblKelasDiajar.Active := True;
+      SetLength(CurrSolusi, TblKelasDiajar.RecordCount, JUMLAHHARI, JUMLAHJAM);
+      // SetLength(JumKegiatan, TblKelasDiajar.RecordCount);
+      SetLength(Summary, TblKelasDiajar.RecordCount);
+      for i := 0 to TblKelasDiajar.RecordCount - 1 do
+      begin
+        TblKelasDiajar.RecNo := i + 1;
+        for j := 0 to Length(Solusi) - 1 do
+        begin
+          CurrKegiatan := AmbilKegiatan(Solusi[j].id);
+          if Assigned(CurrKegiatan) and
+            (CurrKegiatan.tingkat = TblKelasDiajar.FieldByName('tingkatid')
+              .AsInteger) and (CurrKegiatan.jurusan = TblKelasDiajar.FieldByName
+              ('jid').AsInteger) and
+            (CurrKegiatan.kelas = TblKelasDiajar.FieldByName('kelasid')
+              .AsInteger) then
+          begin
+            k := Length(CurrSolusi[i][Alelle[Solusi[j].pos].KodeHari]
+                [Alelle[Solusi[j].pos].KodeJam]);
+            SetLength(CurrSolusi[i][Alelle[Solusi[j].pos].KodeHari]
+                [Alelle[Solusi[j].pos].KodeJam], k + 1);
+            CurrSolusi[i][Alelle[Solusi[j].pos].KodeHari]
+              [Alelle[Solusi[j].pos].KodeJam][k].id := Solusi[j].id;
+            CurrSolusi[i][Alelle[Solusi[j].pos].KodeHari]
+              [Alelle[Solusi[j].pos].KodeJam][k].pos := Solusi[j].pos;
+            // JumKegiatan[i] := JumKegiatan[i] + 1;
+            Summary[i].total := Summary[i].total + 1;
+            Summary[i].Hari[Alelle[Solusi[j].pos].KodeHari] := Summary[i].Hari
+              [Alelle[Solusi[j].pos].KodeHari] + 1;
+            if (Alelle[Solusi[j].pos].KodeJam = 0) then
+            begin
+              Summary[i].hasAwal[Alelle[Solusi[j].pos].KodeHari] := True;
+            end;
+          end;
+        end;
+      end;
+    end;
+
+  end;
+
 begin
   Fitness := 0;
   TotalGen := JUMLAHGEN;
@@ -1218,7 +1273,7 @@ begin
   // ===========================================================================
   if 7 in ENABLEDATURAN then
   begin
-    // AturanPosisi();
+     AturanPosisi2();
   end;
   JumFitAturan[7] := Fitness -
     (JumFitAturan[1] + JumFitAturan[2] + JumFitAturan[3] + JumFitAturan[4]
