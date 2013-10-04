@@ -1,7 +1,7 @@
 _*/
 _*.*
 _*
-Projects/
+Projects/*
 *.dcu
 *.~*~
 *.local
