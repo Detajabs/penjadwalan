@@ -130,9 +130,9 @@ object FrmDataModul: TFrmDataModul
   end
   object TblKegiatan: TZTable
     Connection = DB
-    SortedFields = 'tingkatid;jid;kelasid;pid'
+    SortedFields = 'tingkatid;jid;kelasid;pid;'
     TableName = 'kegiatan'
-    IndexFieldNames = 'tingkatid Asc;jid Asc;kelasid Asc;pid Asc'
+    IndexFieldNames = 'tingkatid Asc;jid Asc;kelasid Asc;pid Asc; Asc'
     Left = 360
     Top = 144
     object TblKegiatankid: TIntegerField

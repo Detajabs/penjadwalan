@@ -13,6 +13,7 @@ object FrmPengajarAturan: TFrmPengajarAturan
   FormStyle = fsMDIChild
   OldCreateOrder = False
   Visible = True
+  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
@@ -80,6 +81,12 @@ object FrmPengajarAturan: TFrmPengajarAturan
           ExplicitWidth = 5
           ExplicitHeight = 16
         end
+        inherited BtnAdd: TsBitBtn
+          OnClick = nil
+        end
+        inherited BtnEdit: TsBitBtn
+          OnClick = nil
+        end
         inherited EdtSearch: TsEdit
           Width = 188
           Height = 24
@@ -122,7 +129,7 @@ object FrmPengajarAturan: TFrmPengajarAturan
       end
       inherited ImageListDML: TImageList
         Bitmap = {
-          494C01010B001000100010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+          494C01010B001000140010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
           0000000000003600000028000000400000003000000001002000000000000030
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000000000000000

@@ -15,6 +15,7 @@ object FrmKegiatan: TFrmKegiatan
   ShowHint = True
   Visible = True
   WindowState = wsMaximized
+  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   DesignSize = (
@@ -30,11 +31,11 @@ object FrmKegiatan: TFrmKegiatan
     Align = alClient
     TabOrder = 1
     ExplicitTop = 65
-    ExplicitWidth = 844
+    ExplicitWidth = 846
     ExplicitHeight = 458
     inherited Panel1: TsPanel
       Width = 846
-      ExplicitWidth = 844
+      ExplicitWidth = 846
       inherited BtnSearch: TsSpeedButton
         Left = 718
         ExplicitLeft = 716
@@ -51,11 +52,12 @@ object FrmKegiatan: TFrmKegiatan
         Left = 811
         ExplicitLeft = 809
       end
+      inherited BtnAdd: TsBitBtn
+        OnClick = nil
+      end
       inherited EdtSearch: TsEdit
         Width = 381
-        Height = 21
-        ExplicitWidth = 379
-        ExplicitHeight = 21
+        ExplicitWidth = 381
       end
     end
     inherited DBGrid: TsDBGrid
@@ -110,7 +112,7 @@ object FrmKegiatan: TFrmKegiatan
     end
     inherited ImageListDML: TImageList
       Bitmap = {
-        494C01010B001C001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+        494C01010B001C00200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
         0000000000003600000028000000400000003000000001002000000000000030
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
@@ -532,7 +534,6 @@ object FrmKegiatan: TFrmKegiatan
     TabOrder = 0
     TabStop = True
     SkinData.SkinSection = 'PANEL'
-    ExplicitWidth = 844
     DesignSize = (
       846
       65)
@@ -788,7 +789,6 @@ object FrmKegiatan: TFrmKegiatan
         ItemIndex = -1
         TabOrder = 2
         OnChange = ComboBox1Change
-        ExplicitLeft = 231
       end
       object sButton1: TsButton
         AlignWithMargins = True
@@ -888,7 +888,7 @@ object FrmKegiatan: TFrmKegiatan
   end
   object ZQuery: TZQuery
     Connection = FrmDataModul.DB
-    SortedFields = 'tingkatid;jurusan;kelasid;matapelajaran;pengajar;jam'
+    SortedFields = 'tingkatid;jid;kelasid;pid;'
     SQL.Strings = (
       'SELECT kid,'
       '       k.tingkatid,'
@@ -902,7 +902,8 @@ object FrmKegiatan: TFrmKegiatan
       '       mp.kode as kode_matapelajaran,'
       '       mp.matapelajaran,'
       '       jam,'
-      '       p.pengajar'
+      '       p.pengajar,'
+      '       p.pid'
       '  FROM kegiatan k'
       '       JOIN jurusan j'
       '         ON k.jid = j.jid'
@@ -915,9 +916,7 @@ object FrmKegiatan: TFrmKegiatan
       '       JOIN tingkat ti'
       '         ON k.tingkatid = ti.tingkatid;')
     Params = <>
-    IndexFieldNames = 
-      'tingkatid Asc;jurusan Asc;kelasid Asc;matapelajaran Asc;pengajar' +
-      ' Asc;jam Asc'
+    IndexFieldNames = 'tingkatid Asc;jid Asc;kelasid Asc;pid Asc; Asc'
     Left = 160
     Top = 320
     object ZQuerykid: TIntegerField
@@ -986,6 +985,9 @@ object FrmKegiatan: TFrmKegiatan
       FieldName = 'kode_matapelajaran'
       Required = True
       Size = 10
+    end
+    object ZQuerypid: TIntegerField
+      FieldName = 'pid'
     end
   end
   object DSKelas: TDataSource

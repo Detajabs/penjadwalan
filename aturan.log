@@ -1,4 +1,38 @@
 
+  if FrmDML.BtnAdd.Action = FrmDML.DBAdd then
+  begin
+    FrmDML.DBAdd.Execute;
+    ToggleState(False);
+  end else if FrmDML.BtnAdd.Action = FrmDML.DBConfirm then begin
+    FrmDML.DBAdd.Execute;
+    ToggleState(True);
+  end;
+  if FrmDML.BtnEdit.Action = FrmDML.DBEdit then
+  begin
+    FrmDML.DBEdit.Execute;
+    ToggleState(False);
+  end else if FrmDML.BtnEdit.Action = FrmDML.DBCancel then begin
+    FrmDML.DBCancel.Execute;
+    ToggleState(True);
+
+
+                // Maju
+                {
+                  if Hari1 = 4 then
+                  begin
+                  if (JP1 < 7) and (JP2 >= 8) then
+                  k := k + 2
+                  else if ((JP1 < 4) and (JP2 >= 5)) or
+                  ((JP1 < 13) and (JP2 >= 14)) then
+                  k := k + 1;
+                  end
+                  else
+                  begin
+                  if ((JP1 < 4) and (JP2 >= 5)) or ((JP1 < 8) and (JP2 >= 9))
+                  or ((JP1 < 13) and (JP2 >= 14)) then
+                  k := k + 1;
+                  end;
+                  }
 
   if 6 in ENABLEDATURAN then
   begin

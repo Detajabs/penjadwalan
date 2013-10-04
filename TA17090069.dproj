@@ -90,6 +90,9 @@
 			<DCCReference Include="OKegiatan.pas"/>
 			<DCCReference Include="ORuangan.pas"/>
 			<DCCReference Include="OAturanPengajar.pas"/>
+			<DCCReference Include="about.pas">
+				<Form>FrmAbout</Form>
+			</DCCReference>
 			<None Include="ModelSupport_TA17090069\default.txaPackage"/>
 			<None Include="ModelSupport_TA17090069\default.txvpck"/>
 			<None Include="ModelSupport_TA17090069\datamodul\default.txvpck"/>
@@ -162,7 +165,7 @@
 						<VersionInfo Name="MajorVer">0</VersionInfo>
 						<VersionInfo Name="MinorVer">0</VersionInfo>
 						<VersionInfo Name="Release">0</VersionInfo>
-						<VersionInfo Name="Build">4</VersionInfo>
+						<VersionInfo Name="Build">36</VersionInfo>
 						<VersionInfo Name="Debug">False</VersionInfo>
 						<VersionInfo Name="PreRelease">False</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -174,7 +177,7 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">deehieday.inc</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription">Aplikasi Pembuat Jadwal Kegiatan Belajar Mengajar</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">0.0.0.4</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">0.0.0.36</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName">UBSI-17090069</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalCopyright">Dede Hidayat</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalTrademarks"/>

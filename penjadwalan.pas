@@ -105,6 +105,8 @@ type
     procedure SetupConfigExecute(Sender: TObject);
     procedure InitAGExecute(Sender: TObject);
     procedure ComboBox1Enter(Sender: TObject);
+
+    procedure Panel2Click(Sender: TObject);
   private
     { Private declarations }
     IIterasi: Integer;
@@ -149,7 +151,7 @@ var
 
 implementation
 
-uses ComObj, datamodul, index, DML, configag;
+uses ComObj, datamodul, index, DML, configag, about;
 {$R *.dfm}
 
 constructor TString.Create(const AStr: String);
@@ -355,7 +357,8 @@ begin
   FreeObjects(ComboBox1.Items);
   FreeObjects(ComboBox2.Items);
   FreeObjects(ComboBox3.Items);
-  AG.Destroy;
+  if Assigned(AG) then
+    AG.Destroy;
   // FreeAndNil(AG);
 end;
 
@@ -426,7 +429,7 @@ begin
   // DBGrid1.Visible := DEBUG_MODE;
   StartRegenerasi.Enabled := false;
   CreateReport.Enabled := false;
-  //SetupConfig.Enabled := False;
+  // SetupConfig.Enabled := False;
   SpeedButton4.Visible := false;
 
   with FrmDataModul do
@@ -521,7 +524,7 @@ end;
 procedure TFrmPenjadwalan.ComboBox1Enter(Sender: TObject);
 begin
 
-  //SendMessage(ComboBox1.handle, CB_SHOWDROPDOWN, Integer(True), 0);
+  // SendMessage(ComboBox1.handle, CB_SHOWDROPDOWN, Integer(True), 0);
 end;
 
 procedure TFrmPenjadwalan.GenerateAGExecute(Sender: TObject);
@@ -760,6 +763,11 @@ begin
     end;
   end;
 
+end;
+
+procedure TFrmPenjadwalan.Panel2Click(Sender: TObject);
+begin
+  FrmAbout.ShowModal;
 end;
 
 function TFrmPenjadwalan.ParseKode(kode: String; DataSet: TDataSet): String;
@@ -1813,41 +1821,41 @@ begin
   StopRegenerasi.Enabled := True;
   CreateReport.Enabled := True;
 end;
- (*
-procedure TFrmPenjadwalan.ApplicationIdle(Sender: TObject; var Done: Boolean);
-var
+(*
+  procedure TFrmPenjadwalan.ApplicationIdle(Sender: TObject; var Done: Boolean);
+  var
   pt: TPoint;
   w: Hwnd;
   ItemBuffer: array [0 .. 256] of Char;
   idx: Integer;
   s: string;
-begin
+  begin
   pt := Mouse.CursorPos;
   w := WindowFromPoint(pt);
   if w = 0 then
-    Exit;
+  Exit;
 
   GetClassName(w, ItemBuffer, SizeOf(ItemBuffer));
   if StrIComp(ItemBuffer, 'ComboLBox') = 0 then
   begin
-    Windows.ScreenToClient(w, pt);
-    idx := SendMessage(w, LB_ITEMFROMPOINT, 0, LParam(PointToSmallPoint(pt)));
-    if idx >= 0 then
-    begin
-      if LB_ERR <> SendMessage(w, LB_GETTEXT, idx, LParam(@ItemBuffer)) then
-      begin
-        s := 'Mouse over item: ' + #13#10 + Format
-          ('Combo.Name: %s,%sItem.Text: %s', [ActiveControl.Name, #13#10,
-          ItemBuffer]);
+  Windows.ScreenToClient(w, pt);
+  idx := SendMessage(w, LB_ITEMFROMPOINT, 0, LParam(PointToSmallPoint(pt)));
+  if idx >= 0 then
+  begin
+  if LB_ERR <> SendMessage(w, LB_GETTEXT, idx, LParam(@ItemBuffer)) then
+  begin
+  s := 'Mouse over item: ' + #13#10 + Format
+  ('Combo.Name: %s,%sItem.Text: %s', [ActiveControl.Name, #13#10,
+  ItemBuffer]);
 
-        ComboItemLabel.Caption := s;
+  ComboItemLabel.Caption := s;
 
-        // explained  later
-        hw.DoActivateHint(ActiveControl.Name + ItemBuffer,
-          'Hint for: ' + ItemBuffer);
-      end;
-    end;
+  // explained  later
+  hw.DoActivateHint(ActiveControl.Name + ItemBuffer,
+  'Hint for: ' + ItemBuffer);
   end;
-end; ApplicationIdle *)
+  end;
+  end;
+  end; ApplicationIdle *)
 
 end.

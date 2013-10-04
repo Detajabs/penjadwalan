@@ -50,14 +50,17 @@ type
     ComboBox2: TsComboBox;
     ComboBox3: TsComboBox;
     sButton1: TsButton;
+    ZQuerypid: TIntegerField;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure DSQueryDataChange(Sender: TObject; Field: TField);
-    procedure ToggleState(Status: Boolean = True);
     procedure ComboBox1Change(Sender: TObject);
     procedure sButton1Click(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
+    procedure ToggleState(Status: Boolean = True);
+    procedure DSourceStateChange(Sender: TObject);
   public
     { Public declarations }
   end;
@@ -96,11 +99,6 @@ begin
   end;
 end;
 
-procedure TFrmKegiatan.ToggleState(Status: Boolean = True);
-begin
-  DBGrid1.Enabled := Status;
-end;
-
 procedure TFrmKegiatan.ComboBox1Change(Sender: TObject);
 var
   Query: string;
@@ -115,6 +113,9 @@ begin
     kelas := TString(ComboBox3.Items.Objects[ComboBox3.ItemIndex]).Str;
   FrmDML.DSource.DataSet.Filtered := False;
   FrmDML.DSource.DataSet.Filter := '';
+  ZQuery.Filtered := False;
+  ZQuery.Filter := '';
+
   Query := '';
   if tingkat <> '' then
   begin
@@ -140,12 +141,20 @@ begin
   FrmDML.DSource.DataSet.Filter := Query;
   FrmDML.DSource.DataSet.Filtered := True;
   FrmDML.DSource.DataSet.First;
+  ZQuery.Filter := Query;
+  ZQuery.Filtered := True;
+  ZQuery.First;
 end;
 
 procedure TFrmKegiatan.DSQueryDataChange(Sender: TObject; Field: TField);
 begin
   FrmDML.DBGrid.DataSource.DataSet.Locate('kid', ZQuery.FieldByName('kid')
       .AsInteger, []);
+end;
+
+procedure TFrmKegiatan.FormActivate(Sender: TObject);
+begin
+  ZQuery.Refresh;
 end;
 
 procedure TFrmKegiatan.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -197,6 +206,8 @@ begin
       ComboBox3.Items.AddObject(FieldByName('kelas').AsString, TString.Create
           (FieldByName('kelasid').AsString));
     end;
+
+  FrmDML.DSource.OnStateChange := DSourceStateChange;
 end;
 
 procedure TFrmKegiatan.sButton1Click(Sender: TObject);
@@ -205,6 +216,22 @@ begin
   ComboBox2.ItemIndex := -1;
   ComboBox3.ItemIndex := -1;
   FrmDML.DSource.DataSet.Filtered := False;
+end;
+
+procedure TFrmKegiatan.DSourceStateChange(Sender: TObject);
+begin
+  if (FrmDML.DSource.State = dsInsert) or (FrmDML.DSource.State = dsEdit) then
+    ToggleState(False)
+  else if (FrmDML.DSource.State = dsBrowse) or
+    (FrmDML.DSource.State = dsFilter) then
+    ToggleState(True);
+end;
+
+procedure TFrmKegiatan.ToggleState(Status: Boolean = True);
+begin
+  if Status then
+    ZQuery.Refresh;
+  DBGrid1.Enabled := Status;
 end;
 
 end.
