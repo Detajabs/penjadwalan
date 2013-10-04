@@ -26,8 +26,6 @@ object FrmConfigAG: TFrmConfigAG
     Caption = 'Aturan '
     TabOrder = 0
     SkinData.SkinSection = 'GROUPBOX'
-    ExplicitTop = 153
-    ExplicitWidth = 205
     object aturan1: TsCheckBox
       Left = 16
       Top = 24
@@ -220,8 +218,6 @@ object FrmConfigAG: TFrmConfigAG
     ParentDoubleBuffered = False
     TabOrder = 2
     SkinData.SkinSection = 'BUTTON'
-    ExplicitTop = 458
-    ExplicitWidth = 205
   end
   object sGroupBox3: TsGroupBox
     Left = 0
@@ -239,22 +235,6 @@ object FrmConfigAG: TFrmConfigAG
       Height = 13
       SkinSection = 'LABEL'
       Caption = 'Target Fitness '
-    end
-    object sLabel1: TsLabel
-      Left = 172
-      Top = 27
-      Width = 100
-      Height = 13
-      SkinSection = 'LABEL'
-      Caption = 'Prob. Crossover (%)'
-    end
-    object sLabel2: TsLabel
-      Left = 172
-      Top = 57
-      Width = 82
-      Height = 13
-      SkinSection = 'LABEL'
-      Caption = 'Prob. Mutasi (%)'
     end
     object sLabel4: TsLabel
       Left = 13
@@ -285,48 +265,6 @@ object FrmConfigAG: TFrmConfigAG
       BoundLabel.MaxWidth = 0
       BoundLabel.UseSkinColor = True
     end
-    object EdPbCross: TsEdit
-      Left = 279
-      Top = 24
-      Width = 51
-      Height = 21
-      Color = 16380653
-      NumbersOnly = True
-      TabOrder = 1
-      Text = '0'
-      OnChange = EdPbCrossChange
-      SkinData.SkinSection = 'EDIT'
-      BoundLabel.Indent = 0
-      BoundLabel.Font.Charset = DEFAULT_CHARSET
-      BoundLabel.Font.Color = clWindowText
-      BoundLabel.Font.Height = -11
-      BoundLabel.Font.Name = 'Tahoma'
-      BoundLabel.Font.Style = []
-      BoundLabel.Layout = sclLeft
-      BoundLabel.MaxWidth = 0
-      BoundLabel.UseSkinColor = True
-    end
-    object EdPbMutasi: TsEdit
-      Left = 279
-      Top = 54
-      Width = 51
-      Height = 21
-      Color = 16380653
-      NumbersOnly = True
-      TabOrder = 2
-      Text = '0'
-      OnChange = EdPbMutasiChange
-      SkinData.SkinSection = 'EDIT'
-      BoundLabel.Indent = 0
-      BoundLabel.Font.Charset = DEFAULT_CHARSET
-      BoundLabel.Font.Color = clWindowText
-      BoundLabel.Font.Height = -11
-      BoundLabel.Font.Name = 'Tahoma'
-      BoundLabel.Font.Style = []
-      BoundLabel.Layout = sclLeft
-      BoundLabel.MaxWidth = 0
-      BoundLabel.UseSkinColor = True
-    end
     object EdMaxIterasi: TsEdit
       Left = 90
       Top = 51
@@ -334,7 +272,7 @@ object FrmConfigAG: TFrmConfigAG
       Height = 21
       Color = 16380653
       NumbersOnly = True
-      TabOrder = 3
+      TabOrder = 1
       Text = '0'
       SkinData.SkinSection = 'EDIT'
       BoundLabel.Indent = 0
@@ -347,21 +285,86 @@ object FrmConfigAG: TFrmConfigAG
       BoundLabel.MaxWidth = 0
       BoundLabel.UseSkinColor = True
     end
-    object sUpDown1: TsUpDown
-      Left = 330
-      Top = 24
-      Width = 15
-      Height = 21
-      Associate = EdPbCross
-      TabOrder = 4
-    end
-    object sUpDown2: TsUpDown
-      Left = 330
-      Top = 54
-      Width = 15
-      Height = 21
-      Associate = EdPbMutasi
-      TabOrder = 5
+    object Panel1: TPanel
+      Left = 157
+      Top = 17
+      Width = 194
+      Height = 59
+      TabOrder = 2
+      object sLabel1: TsLabel
+        Left = 12
+        Top = 9
+        Width = 100
+        Height = 13
+        SkinSection = 'LABEL'
+        Caption = 'Prob. Crossover (%)'
+      end
+      object sLabel2: TsLabel
+        Left = 12
+        Top = 36
+        Width = 82
+        Height = 13
+        SkinSection = 'LABEL'
+        Caption = 'Prob. Mutasi (%)'
+      end
+      object EdPbCross: TsEdit
+        Left = 118
+        Top = 6
+        Width = 51
+        Height = 21
+        Color = 16380653
+        NumbersOnly = True
+        TabOrder = 0
+        Text = '0'
+        OnChange = EdPbCrossChange
+        SkinData.SkinSection = 'EDIT'
+        BoundLabel.Indent = 0
+        BoundLabel.Font.Charset = DEFAULT_CHARSET
+        BoundLabel.Font.Color = clWindowText
+        BoundLabel.Font.Height = -11
+        BoundLabel.Font.Name = 'Tahoma'
+        BoundLabel.Font.Style = []
+        BoundLabel.Layout = sclLeft
+        BoundLabel.MaxWidth = 0
+        BoundLabel.UseSkinColor = True
+      end
+      object sUpDown1: TsUpDown
+        Left = 169
+        Top = 6
+        Width = 16
+        Height = 21
+        Associate = EdPbCross
+        TabOrder = 1
+      end
+      object EdPbMutasi: TsEdit
+        Left = 118
+        Top = 33
+        Width = 51
+        Height = 21
+        Color = 16380653
+        NumbersOnly = True
+        TabOrder = 2
+        Text = '0'
+        OnChange = EdPbMutasiChange
+        SkinData.SkinSection = 'EDIT'
+        BoundLabel.Indent = 0
+        BoundLabel.Font.Charset = DEFAULT_CHARSET
+        BoundLabel.Font.Color = clWindowText
+        BoundLabel.Font.Height = -11
+        BoundLabel.Font.Name = 'Tahoma'
+        BoundLabel.Font.Style = []
+        BoundLabel.Layout = sclLeft
+        BoundLabel.MaxWidth = 0
+        BoundLabel.UseSkinColor = True
+      end
+      object sUpDown2: TsUpDown
+        Left = 169
+        Top = 33
+        Width = 16
+        Height = 21
+        Associate = EdPbMutasi
+        TabOrder = 3
+      end
     end
   end
 end

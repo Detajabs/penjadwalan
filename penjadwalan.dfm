@@ -243,15 +243,15 @@ object FrmPenjadwalan: TFrmPenjadwalan
         Caption = '0'
       end
       object Label9: TsLabel
-        Left = 298
+        Left = 316
         Top = 5
-        Width = 81
+        Width = 106
         Height = 16
         SkinSection = 'LABEL'
-        Caption = 'Kelas Kuliah : '
+        Caption = 'Kegiatan Belajar : '
       end
       object LblKelasKuliah: TsLabel
-        Left = 385
+        Left = 424
         Top = 5
         Width = 7
         Height = 16
@@ -387,6 +387,7 @@ object FrmPenjadwalan: TFrmPenjadwalan
       Font.Style = []
       ParentFont = False
       TabOrder = 3
+      OnClick = Panel2Click
       SkinData.SkinSection = 'PANEL'
       object SpeedButton1: TsSpeedButton
         AlignWithMargins = True

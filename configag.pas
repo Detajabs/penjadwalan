@@ -29,13 +29,14 @@ type
     sGroupBox3: TsGroupBox;
     EdTgFitness: TsEdit;
     sLabel3: TsLabel;
-    EdPbCross: TsEdit;
-    sLabel1: TsLabel;
-    EdPbMutasi: TsEdit;
-    sLabel2: TsLabel;
     EdMaxIterasi: TsEdit;
     sLabel4: TsLabel;
+    Panel1: TPanel;
+    sLabel1: TsLabel;
+    EdPbCross: TsEdit;
     sUpDown1: TsUpDown;
+    sLabel2: TsLabel;
+    EdPbMutasi: TsEdit;
     sUpDown2: TsUpDown;
     procedure aturan1Click(Sender: TObject);
     procedure aturan2Click(Sender: TObject);
@@ -179,6 +180,9 @@ begin
   //EdPbMutasi.Text := FloatToStr(PB_MUTASI);
   sUpDown1.Position := PB_CROSS;
   sUpDown2.Position := PB_MUTASI;
+
+  Panel1.Visible := DEBUG_MODE;
+
 end;
 
 procedure TFrmConfigAG.laporan1Click(Sender: TObject);

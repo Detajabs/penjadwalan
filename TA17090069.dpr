@@ -23,7 +23,8 @@ uses
   configag in 'configag.pas' {FrmConfigAG},
   OKegiatan in 'OKegiatan.pas',
   ORuangan in 'ORuangan.pas',
-  OAturanPengajar in 'OAturanPengajar.pas';
+  OAturanPengajar in 'OAturanPengajar.pas',
+  about in 'about.pas' {FrmAbout};
 
 {*.res}
 
@@ -42,6 +43,7 @@ begin
   Application.CreateForm(TFrmDataModul, FrmDataModul);
   Application.CreateForm(TFrmIndex, FrmIndex);
   Application.CreateForm(TFrmConfigAG, FrmConfigAG);
+  Application.CreateForm(TFrmAbout, FrmAbout);
   if FrmDataModul.DB.Connected = true then
     Application.CreateForm(TFrmPenjadwalan, FrmPenjadwalan)
   else

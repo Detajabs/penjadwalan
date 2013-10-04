@@ -465,7 +465,7 @@ type
   end;
 var
   Temp, Fitness, i, j, k, l, Index: integer;
-  JedaHari, IndRuang, IndHari, TotalGen: integer;
+  // JedaHari, IndRuang, IndHari, TotalGen: integer;
 
   JumKuliah: array of array of array of integer;
   Semester1, KodeMtk1, Dosen1, Kelas1, Jurusan1, Hari1: integer;
@@ -486,7 +486,6 @@ var
     i, j, k: integer;
   begin
     // Overtime, Jumatan, Waktu Istirahat, dan bentrok ruangan sebelum waktu habis
-
     try
       for k := 0 to Length(Solusi) - 1 do
       begin
@@ -526,9 +525,17 @@ var
           else
           begin
             j := 1;
-            if ((JP1 < 4) and (JP2 >= 5)) or ((JP1 < 8) and (JP2 >= 9)) or
+
+            if ((JP1 < 4) and (JP2 >= 5)) or ((JP1 < 13) and (JP2 >= 14)) or
+              ((Hari1 <> 4) and (JP1 < 8) and (JP2 >= 9)) then
+              j := j + 1
+            else if (Hari1 = 4) and (JP1 = 6) and (JP2 >= 7) then
+              j := j + 2;
+            {
+              if ((JP1 < 4) and (JP2 >= 5)) or ((JP1 < 8) and (JP2 >= 9)) or
               ((JP1 < 13) and (JP2 >= 14)) then
               j := j + 1;
+              }
             if (JP2 - JP1 = 2) or (JP2 - JP1 = 3) or (JP2 - JP1 = 4) then
             begin
               if (Kromosom[NoKromosom][i + j] <> '0') and
@@ -576,6 +583,7 @@ var
   procedure AturanKelas();
   var
     i, j, k: integer;
+    JedaHari, IndRuang, IndHari: integer;
   begin
     // Kelas berada lebih dari satu ruangan pada waktu yg sama
     try
@@ -584,7 +592,7 @@ var
       JedaHari := JUMLAHRUANG * JUMLAHJAM;
       // with FrmPenjadwalan.TblKegiatanQuery do
       // begin
-      for i := 0 to TotalGen - 1 do
+      for i := 0 to JUMLAHGEN - 1 do
       begin
         if (i >= ((IndHari - 1) * JedaHari)) and
           (i < ((IndHari * JedaHari) - JUMLAHJAM)) then
@@ -627,37 +635,18 @@ var
               end
               // Bentrok pada range waktu yang sama
               else if (JP2 <= JUMLAHJAM) then
+              //else
               begin
                 // Maju
                 k := 1;
-                {
-                  if Hari1 = 4 then
-                  begin
-                  if (JP1 < 7) and (JP2 >= 8) then
-                  k := k + 2
-                  else if ((JP1 < 4) and (JP2 >= 5)) or
-                  ((JP1 < 13) and (JP2 >= 14)) then
-                  k := k + 1;
-                  end
-                  else
-                  begin
-                  if ((JP1 < 4) and (JP2 >= 5)) or ((JP1 < 8) and (JP2 >= 9)) or
-                  ((JP1 < 13) and (JP2 >= 14)) then
-                  k := k + 1;
-                  end;
-                  }
                 if ((JP1 < 4) and (JP2 >= 5)) or ((JP1 < 13) and (JP2 >= 14))
-                  then
+                  or ((Hari1 <> 4) and (JP1 < 8) and (JP2 >= 9)) then
                   k := k + 1
-                else
-                begin
-                  if (Hari1 = 4) and (JP1 < 7) and (JP2 >= 8) then
-                    k := k + 2
-                  else if (Hari1 <> 4) and (JP1 < 8) and (JP2 >= 9) then
-                    k := k + 1;
-                end;
+                else if (Hari1 = 4) and (JP1 = 6) and (JP2 >= 7) then
+                  k := k + 2;
 
                 // Jam Pertemuan 2 or 3 +
+                if i + (j * JUMLAHJAM) + k < JUMLAHGEN then
                 CurrKegiatan := AmbilKegiatan
                   (Kromosom[NoKromosom][i + (j * JUMLAHJAM) + k]);
                 if Assigned(CurrKegiatan) and
@@ -679,7 +668,7 @@ var
                 end;
 
                 // Jam Pertemuan 3 +
-                if i + (j * JUMLAHJAM) + k + 1 < TotalGen then
+                if i + (j * JUMLAHJAM) + k + 1 < JUMLAHGEN then
                   CurrKegiatan := AmbilKegiatan
                     (Kromosom[NoKromosom][i + (j * JUMLAHJAM) + k + 1]);
                 if Assigned(CurrKegiatan) and (JP2 - JP1 = 3) then
@@ -701,14 +690,13 @@ var
 
                 // Mundur
                 k := 1;
-                if (JP1 = 5) or (JP1 = 9) or (JP1 = 14) then
-                begin
-                  k := k + 1;
-                  if (Hari1 = 4) and (JP1 = 9) then
-                    k := k + 2;
-                end;
+                if (JP1 = 5) or (JP1 = 14) or ((Hari1 <> 4) and (JP1 = 9)) then
+                  k := k + 1
+                else if (Hari1 = 4) and (JP1 = 9) then
+                  k := k + 2;
 
                 // Jam Pertemuan 2 or 3 -
+                if i + (j * JUMLAHJAM) - k >= 0 then
                 CurrKegiatan := AmbilKegiatan
                   (Kromosom[NoKromosom][i + (j * JUMLAHJAM) - k]);
                 if Assigned(CurrKegiatan) and (JP1 > 0) and
@@ -773,13 +761,14 @@ var
   procedure AturanPengajar();
   var
     i, j, k: integer;
+    JedaHari, IndRuang, IndHari: integer;
   begin
     // Pengajar berada lebih dari satu ruangan pada waktu yg sama
     try
       IndRuang := 1;
       IndHari := 1;
       JedaHari := JUMLAHRUANG * JUMLAHJAM;
-      for i := 0 to TotalGen - 1 do
+      for i := 0 to JUMLAHGEN - 1 do
       begin
         if (i >= ((IndHari - 1) * JedaHari)) and
           (i < ((IndHari * JedaHari) - JUMLAHJAM)) then
@@ -816,22 +805,19 @@ var
               end
               // Bentrok pada range waktu yang sama
               else if (JP2 <= JUMLAHJAM) then
+              //else
               begin
 
                 // Maju
                 k := 1;
                 if ((JP1 < 4) and (JP2 >= 5)) or ((JP1 < 13) and (JP2 >= 14))
-                  then
+                  or ((Hari1 <> 4) and (JP1 < 8) and (JP2 >= 9)) then
                   k := k + 1
-                else
-                begin
-                  if (Hari1 = 4) and (JP1 < 7) and (JP2 >= 8) then
-                    k := k + 2
-                  else if (Hari1 <> 4) and (JP1 < 8) and (JP2 >= 9) then
-                    k := k + 1;
-                end;
+                else if (Hari1 = 4) and (JP1 = 6) and (JP2 >= 7) then
+                  k := k + 2;
 
                 // Jam Pertemuan 2 or 3 +
+                if i + (j * JUMLAHJAM) + k < JUMLAHGEN then
                 CurrKegiatan := AmbilKegiatan
                   (Kromosom[NoKromosom][i + (j * JUMLAHJAM) + k]);
                 if Assigned(CurrKegiatan) and
@@ -848,7 +834,7 @@ var
                   end;
                 end;
                 // Jam Pertemuan 3 +
-                if i + (j * JUMLAHJAM) + k + 1 < TotalGen then
+                if i + (j * JUMLAHJAM) + k + 1 < JUMLAHGEN then
                   CurrKegiatan := AmbilKegiatan
                     (Kromosom[NoKromosom][i + (j * JUMLAHJAM) + k + 1]);
                 if Assigned(CurrKegiatan) and (JP2 - JP1 = 3) then
@@ -874,6 +860,7 @@ var
                 end;
 
                 // Jam Pertemuan 2 or 3 -
+                if i + (j * JUMLAHJAM) - k >= 0 then
                 CurrKegiatan := AmbilKegiatan
                   (Kromosom[NoKromosom][i + (j * JUMLAHJAM) - k]);
                 if Assigned(CurrKegiatan) and (JP1 > 0) and
@@ -1172,10 +1159,10 @@ var
 
 begin
   Fitness := 0;
-  TotalGen := JUMLAHGEN;
+  Solusi := nil;
   SetLength(Solusi, Length(Kegiatan));
   j := 0;
-  for i := 0 to TotalGen - 1 do
+  for i := 0 to JUMLAHGEN - 1 do
   begin
     if Kromosom[NoKromosom][i] <> '0' then
     begin
@@ -1273,7 +1260,7 @@ begin
   // ===========================================================================
   if 7 in ENABLEDATURAN then
   begin
-     AturanPosisi2();
+    AturanPosisi2();
   end;
   JumFitAturan[7] := Fitness -
     (JumFitAturan[1] + JumFitAturan[2] + JumFitAturan[3] + JumFitAturan[4]
